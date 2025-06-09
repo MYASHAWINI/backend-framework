@@ -1021,6 +1021,8 @@ A REST API (Representational State Transfer API) offers a wide range of benefits
 
 In summary, the benefits of REST APIs lie in their simplicity, scalability, flexibility, and broad adoption, making them an ideal choice for building modern web services and applications.
 
+### Node.js
+
 **Node.js** is a popular, open-source, server-side JavaScript runtime environment. It allows you to run JavaScript code outside of the browser, primarily for building scalable and high-performance network applications, such as web servers, APIs, and real-time services.
 
 ### Key Features and Benefits of Node.js
