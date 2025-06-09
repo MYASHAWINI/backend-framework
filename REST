@@ -1,3 +1,54 @@
+ REST
+
+ RESTful APIs are a popular way to expose data and functionality to other
+ applications. REST stands for Representational State Transfer, and it is a set of
+ architectural principles that define how web services should interact with each other.
+ 
+ JavaScript is a powerful language that can be used to create RESTful APIs. There
+ are a number of libraries and frameworks that can help one to create RESTful APIs
+ in JavaScript, such as Express, Axios, and Superagent.
+ Here is a simple example of a RESTful API that can be created in JavaScript: 
+const express = require("express");
+ const app = express(); 
+app.get("/users", (req, res) => {
+ res.json([
+ { id: 1, name: "John Doe" },
+ { id: 2, name: "Jane Doe" }
+ ]);
+ });
+ app.listen(3000, () => {
+ console.log("Server is running on port 3000");
+ });
+ This code defines a simple RESTful API that exposes a /users endpoint. The /users 
+endpoint returns a JSONarray of users.
+ To use this API, one can use a tool like Postman to make a GET request to the
+ /users endpoint. The response will be a JSON array of users.
+ RESTful APIs are a powerful way to expose data and functionality to other
+ applications. JavaScript is a great language for creating RESTful APIs, and there are
+ a number of libraries and frameworks that can help one to get started.
+ The first line imports the express library. Express is a popular web framework for
+ Node.js that makes it easy to create RESTful APIs.
+ 
+ The next line creates an Express application. The application is assigned to the
+ variable app.
+ The third line defines a route for the /users endpoint. The get method defines a GET
+ request handler. The handler function takes two arguments: req and res. req is an
+ object that contains information about the request, such as the headers and the
+ body. res is an object that is used to send the response.
+ The handler function in this example simply returns a JSON array of users. The
+ JSONarray is created using the JSON.stringify() method.
+ The fourth line tells the application to listen on port 3000.
+ The fifth line logs a message to the console when the server starts.
+ This is a very simple example of a RESTful API. However, it shows the basic 
+concepts of RESTful APIs.RESTful APIs are based on the following principles:
+ Resources: Resources are the nouns in your API. For example, a user resource 
+might represent a user in your database.
+ URIs: URIs are used to identify resources. For example, the URI /users might 
+identify the users resource.
+ HTTP methods: HTTP methods are used to perform actions on resources. The most 
+common HTTPmethods are GET,POST,PUT,and DELETE.
+ Data formats: RESTful APIs typically use JSON to represent data
+
 1. REST Introduction
 What is REST?
 The REST stands for REpresentational State Transfer.
