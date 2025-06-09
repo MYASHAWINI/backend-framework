@@ -13,8 +13,6 @@ A REST API is an intermediary Application Programming Interface that enables two
 The REST architectural style has quickly become very popular over the world for designing and architecting applications that can communicate. 
 The need for REST APIs increased a lot with the drastic increase of mobile devices. It became logical to build REST APIs and let the web and mobile clients consume the API instead of developing separate applications.
 2. REST Architecture
-The below diagram shows the typical REST architecture:
-
 
 Let's understand a few web service term's by looking into the above architecture:
 Request and Response: Request is the input to a web service, and the response is the output from a web service.
@@ -48,61 +46,6 @@ Read more about constraints at https://www.javaguides.net/2018/06/rest-architect
 Resource
 The fundamental concept of a REST-based system is the resource. A resource is anything you want to expose to the outside world, through your application.
 
-Example 1: Resources for Employee Management System:
-
-- Employee
-
-- Department
-
-- Projects
-
-- Task
-
-- Address
-
-Example 2: Resources for Student Management System:
-
-- Student
-
-- Teacher
-
-- School
-
-- Class
-
-- Subject
-
-URI - Uniform Resource Identifier 
-The resource can be identified by a Uniform Resource Identifier (URI). For web-based systems, HTTP is the most commonly used protocol for communicating with external systems. You can identify a unique resource using a URI.
-
-Consider, we are developing a simple blog application and you can define URIs for a blog Post resource:
-
-GET—http://localhost:8080/api/posts/: Returns a list of all posts
-
-GET—http://localhost:8080/api/posts/2: Returns a post whose ID is 2
-
-POST—http://localhost:8080/api/posts/: Creates a new Post resource
-
-PUT—http://localhost:8080/api/posts/2: Updates a POST resource whose ID is 2
-
-DELETE—http://localhost:8080/api/posts/2: Deletes a POST resource whose ID is 2
-
-Sub-resource
-In REST, the relationships are often modeled by a sub-resource. Use the following pattern for sub-resources.
-
-GET  /{resource}/{resource-id}/{sub-resource}
-
-GET  /{resource}/{resource-id}/{sub-resource}/{sub-resource-id}
-
-POST /{resource}/{resource-id}/{sub-resource}
-
-Example: 
-
-GET  /{post}/{post-id}/{comments}
-GET  /{post}/{post-id}/{comments}/{comment-id}
-POST /{post}/{post-id}/{comments}
-Use sub-resources child object cannot exist without its parent.
-
 HTTP Methods
 Common HTTP verbs:
 •	 GET—To get a collection or a single resource
@@ -119,42 +62,140 @@ Some of the frequently used status codes in this class are as follows:
 403 Forbidden: This code indicates that the server is refusing to respond to the request even if the request is valid. The reason will be listed in the body content if the request is not a HEAD method.
 404 Not Found: This code indicates that the requested resource is not found at the location specified in the request.
 500 Internal Server Error: This code indicates a generic error message, and it tells that an unexpected error occurred on the server and that the request cannot be fulfilled.
+REST is built on a few key principles:
 
-5. Build REST API with Java
-1. REST Basics
-✅  Overview of REST
-✅  What is Payload in REST API? // New
-✅  REST API - HTTP Methods // Popular
-✅  REST API - HTTP Status Codes // Popular
-✅  Advantages of REST
-✅  REST API - REST Architectural Constraints // Popular
-✅  REST API - REST Architectural Properties
-✅  REST API - REST Architectural Elements
-✅  Difference Between SOAP vs REST Web Services
-2. Design REST API Guide
-✅  How to Identify REST Resources
-✅  How to Design URL to REST Resource // Popular
-✅  How to Assign HTTP methods to REST Resources
-✅  How to Model JSON Representation Format // Popular
-✅  What HTTP Status Code to Return
-3. Rest API Design Best Practices
-✅  Restful API Design Best Practices // Popular
-4. Build REST API with Jersey Rest Framework
-✅  Jersey Rest Hello World Example
-✅  Jersey JAX-RS Restful CRUD Web Services Example // Popular
-✅  Jersey Rest Developer Guide
-5. Build REST API using JAX-RS RESTEasy Framework
-✅  RESTEasy Hello World Example Tutorial // Popular
-✅  RESTEasy JAX-RS Get, POST, PUT and DELETE Tutorial // Popular
-✅  RESTEasy Client for GET, POST, PUT, and DELETE RESTFul APIs
-6. Build REST API using Spring Boot
-✅ Spring Boot CRUD REST API Project using IntelliJ IDEA | Postman | MySQL
-✅ Spring Boot, MySQL, JPA, Hibernate Restful CRUD API Tutorial
-✅ Spring Boot File Upload / Download Rest API Example
-✅ Spring Boot, H2, JPA, Hibernate Restful CRUD API Tutorial
-✅ Spring Boot Login REST API using Spring Security and MySQL
-✅ Login and Registration REST API using Spring Boot, Spring Security, Hibernate, and MySQL  Database
-✅ Spring Boot REST API Documentation with Swagger
-✅ Search REST API using Spring Boot, Spring Data JPA, and MySQL Database
-✅ Spring Boot Unit Testing CRUD REST API with JUnit and Mockito
-✅ Spring Boot Integration Testing MySQL CRUD REST API Tutorial
+Stateless: Each request from a client to a server must contain all the information needed to understand and process the request. In simpler terms, the server doesn’t remember previous requests from the same client.
+Client-Server: REST separates the client (the user interface) from the server (where data and processing happen). This separation allows for more flexibility and scalability.
+Uniform Interface: REST APIs have a consistent and predictable structure, making it easy for developers to understand and use them. They typically use standard HTTP methods like GET (for retrieving data) and POST (for creating data).
+Resource-Based: As mentioned earlier, everything in REST is treated as a resource, and each resource is identified by a unique URL. This makes it easy to locate and manipulate specific pieces of data.
+Representation: Resources can have multiple representations (e.g., JSON or XML), which makes them versatile and suitable for various types of clients.
+Why do developers love RESTful APIs? Here are some compelling reasons:
+
+Simplicity: REST’s straightforward structure and use of HTTP methods make it easy to learn and use.
+Scalability: RESTful APIs can handle large numbers of requests, making them suitable for applications of all sizes.
+Flexibility: They support various data formats, making it easy to work with different programming languages and platforms.
+Statelessness: Since each request is independent, RESTful APIs are less prone to issues caused by server-side state.
+In summary, REST provides a clear and organized way to design APIs, which is why it’s a favorite among developers. Now that you have a grasp of REST fundamentals, let us move on to understand some rules and regulations around REST to make sure it is usable and understandable by the developers who you are using your API to build apps and products.
+
+RESTful API Design – Best Practices
+Now that you understand what is the RESTful API, it’s time to dive into the design phase. Following these best practices will help you create an API that developers find intuitive and enjoyable to work with.
+
+Choosing the Right HTTP Methods
+Note that it is very important to use the correct HTTP method to perform some action when it comes to the REST API. Here are the types of requests along with the usage.
+
+GET for Retrieving Data: Use the HTTP GET method when clients want to retrieve information from your API. It should be safe and idempotent, meaning it doesn’t change the server’s state.
+POST for Creating Data: Employ POST for creating new records or resources on the server. This method typically includes data in the request body.
+PUT and PATCH for Updates: Use PUT when clients want to update an entire resource and PATCH when making partial updates. Ensure that your updates are idempotent.
+DELETE for Removal: When a client needs to delete a resource, use the DELETE method. Be cautious with DELETE requests, as they can’t be undone.
+Once you understand the usage of the different request types, It is easy to create CRUD operations for multiple resources or models in your API.
+
+Creating Meaningful URIs
+RESTful APIs are not just easy to use, but they are also easy to understand. If you are a Laravel developer, You will understand the importance of using the correct and meaningful URIs for your models. As mentioned below, Do not use verbs, instead, use Nouns to name your resources.
+
+In the URIs, We use the plural form of the resource. So, in the following example, You see “users” and “products” in plural.
+
+Use Nouns for Resources: URIs should represent resources, and the names should be nouns (e.g., /users, /products). Avoid verbs in URIs.
+Keep URIs Simple: Aim for clean and straightforward URIs. Avoid long and convoluted URLs that are difficult to understand.
+The simple URIs can be as simple as the following example of the User model/resource.
+
+Example: To fetch all posts made by a specific user (user with ID 123), use /users/123/posts.
+So, this is how you can keep your API easy to use. Note that you just have to replace the resource name if you are using this method. Other than that, everything stays the same, which makes the developer’s life easier.
+
+What is REST API?
+REST (Representational State Transfer) is an architectural style that was introduced by Roy Fielding in his doctoral dissertation in 2000. RESTful APIs, or simply REST APIs, adhere to the principles and constraints laid out by REST. These APIs are designed to be simple, scalable, and stateless, making them ideal for the web.
+
+Key Principles of REST API:
+Statelessness: Each request from a client to a server must contain all the information needed to understand and fulfil the request. The server should not store any client state between requests.
+
+Client-Server Architecture: The client and server are separate entities that communicate over a network. This separation enhances scalability and simplifies maintenance.
+
+Uniform Interface: REST API enforces a uniform and consistent interface between components. This includes resource identification, manipulation using representations, and self-descriptive messages.
+
+Resource-Based: REST treats data as resources identified by URLs. These resources can be manipulated using standard HTTP methods like GET, POST, PUT, and DELETE.
+
+Representation: Resources are represented in different formats, such as JSON or XML. Clients interact with these representations to perform operations.
+
+How REST API Works
+REST API relies on standard HTTP methods for communication. Each resource is identified by a unique URL, and these resources can be manipulated using the appropriate HTTP methods.
+
+GET: Retrieve information about a resource.
+POST: Create a new resource.
+PUT: Update an existing resource.
+DELETE: Remove a resource.
+For example, to retrieve information about a user with the ID 123, the URL might be https://api.example.com/users/123 using the GET method.
+
+REST API works as a communication between two systems, sharing the data from one system to another system and vice versa. 
+
+The Basic steps for processing REST API, 
+
+A system (let’s call it a front-end web application) sends a request by calling the REST API URL. 
+Another system (let’s call it a backend web application) parses the request based on the data received from the front end and the URL pattern. 
+The backend system returns the data to the frontend system as an HTTP response with JSON data
+Benefits of REST API
+Scalability: REST API's statelessness and simplicity contribute to easy scalability.
+Flexibility: Supports multiple data formats, making it flexible for different applications.
+Simplicity: Easy to understand and implement, reducing development time and effort.
+Compatibility: Compatible with various programming languages and platforms.
+Let’s understand and get a basic idea of the workings of the REST API by a simple example.
+
+Examples
+Ordering in Restaurant
+Let’s understand it with the restaurant example. If you visit a restaurant, you interact with the waiter to order your food.
+The key persons are you (front-end), a waiter (REST API) & the restaurant (back-end). You give your order to the waiter, wait for your order and it’s delivered to you.
+
+Courier Service
+Another example is the courier service. In this case, the sender sends a parcel and that parcel is delivered to the doorstep of the receiver and the sender gets a message of successful delivery.
+In this case, the sender is the front end, the receiver is the backend and the courier service being used is the REST API.
+In conclusion, REST API has become the backbone of modern web development, providing a standardised and scalable way for applications to communicate. Understanding its principles and how it works is essential for any developer building web-based systems.
+Now that you've grasped the basics of REST API, consider implementing it in your projects to enhance interoperability and efficiency.
+
+REST, or Representational State Transfer, is a software architectural style widely used in the development of web services. It presents a simple and intuitive approach compared to traditional methods like SOAP (Simple Object Access Protocol), bringing a significant paradigm shift in how web applications are designed and interacted with.
+
+What is REST API?
+REST API is an application programming interface (API) that adheres to the principles of REST. It enables communication and data transfer between different software components. They perform operations using standard HTTP methods such as GET, POST, PUT, DELETE, etc.
+
+What does REST in REST API stand for?
+The term REST in REST API stands for Representational State Transfer. This architectural style was proposed by Roy Fielding, a computer scientist, in his doctoral dissertation in 2000.
+
+Representational: It means that the data is sent as a representation of the state of a resource, not the resource itself. The representations are typically in JSON or XML format.
+State: This pertains to the current condition of a session or an object. In RESTful services, this state is client-side, which means the server does not store any information about the client's state between requests.
+Transfer: It implies the communication of these states (representations of resources) over a protocol, typically HTTP.
+REST API
+REST API
+REST API Protocol
+The protocol used by REST APIs is typically HTTP (Hypertext Transfer Protocol), as REST is designed to work well within the existing structures of the internet. Here’s how each HTTP method typically maps to CRUD (Create, Read, Update, Delete) operations:
+
+GET: Retrieve a specific resource or a collection of resources.
+POST: Create a new resource.
+PUT: Update an existing resource.
+DELETE: Delete a specific resource.
+HTTP also provides status codes, which can be returned as part of the HTTP response to indicate the result of the request. These status codes provide a way to communicate successes, errors, and other information from the server to the client.
+
+RESTful API Meaning
+When we say an API is RESTful, it implies that the API adheres to the principles and constraints of the REST architecture. These principles include client-server communication, stateless servers, cacheable data, layered system design, and the optional code on demand.
+
+A RESTful API uses HTTP requests to GET, PUT, POST, and DELETE data. It is often used in cloud applications, mobile platforms, social networking websites, and automated business processes.
+
+REST API Definition
+A REST API is a set of rules and conventions for building and interacting with web services. It uses HTTP methods, URL patterns, response codes, and data exchange formats to provide a well-defined interface for interacting with the underlying system. The key aspect of a REST API is its stateless nature - each request from a client contains all the information needed to service that request.
+
+REST APIs are often specified using a document describing the API's various aspects, such as endpoints, HTTP methods, request/response formats, status codes, etc. There are several specifications and tools available to define and document REST APIs, including the following:
+
+OpenAPI Specification (OAS): Formerly known as the Swagger Specification, the OpenAPI Specification is a popular choice for specifying REST APIs. It provides a standard, language-agnostic way to describe APIs. It includes details about endpoints, operations on each endpoint, input/output models, authentication methods, contact information, license, terms of use, and more.
+‍
+RAML (RESTful API Modeling Language): RAML is another specification used to describe RESTful APIs. It's based on YAML, a JSON superset, and designed to be easily readable and writable.
+‍
+API Blueprint: This high-level, open-source specification tool uses markdown. It is designed to be easy to learn and provides a simple syntax for describing aspects like URI, methods, headers, request, and response payloads, etc.
+Each specification has its strengths, and the choice often depends on the specific needs of a project. Regardless of the specification, the goal is to provide a clear, comprehensive, and accurate description of the API's work.
+
+What are REST APIs used for?
+REST APIs are primarily used for building web services in a scalable manner. Some of the key uses are:
+
+Building Web-Based Services: REST APIs allow different services and applications to communicate with each other over the web, making it easier to build services that operate over the Internet.
+‍
+Creating Interfaces for Different Devices: REST APIs can be used to build interfaces for different client devices like desktops, mobile phones, tablets, etc., as the API provides a standard way to interact with the underlying service.
+‍
+Managing Cloud Services: Many cloud platforms use REST APIs to allow users to manage and control their services.
+The principles of REST and REST APIs provide a robust, scalable framework for building a wide range of web services. Understanding these concepts is critical for developers looking to utilize the full potential of web technologies and create dynamic, flexible, and user-friendly applications.
+
+Take control of your Application & API security with contextual testing, risk assessment, and continuous vulnerability management
