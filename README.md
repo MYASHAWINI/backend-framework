@@ -406,3 +406,473 @@ A layered system has load balancers in its design.
 It has parts like firewalls and load balancers.
 This setup does not change how clients speak to servers.
 It helps to make things bigger and better.
+
+# REST API Introduction
+REST API stands for REpresentational State Transfer API. It is a type of API (Application Programming Interface) that allows communication between different systems over the internet. REST APIs work by sending requests and receiving responses, typically in JSON format, between the client and server.
+
+REST APIs use HTTP methods (such as GET, POST, PUT, DELETE) to define actions that can be performed on resources. These methods align with CRUD (Create, Read, Update, Delete) operations, which are used to manipulate resources over the web.
+
+A request is sent from the client to the server via a web URL, using one of the HTTP methods. The server then responds with the requested resource, which could be HTML, XML, Image, or JSON, with JSON being the most commonly used format for modern web services.
+
+Key Features of REST APIs
+Stateless: Each request from a client to a server must contain all the information the server needs to fulfill the request. No session state is stored on the server.
+Client-Server Architecture: RESTful APIs are based on a client-server model, where the client and server operate independently, allowing scalability.
+Cacheable: Responses from the server can be explicitly marked as cacheable or non-cacheable to improve performance.
+Uniform Interface: REST APIs follow a set of conventions and constraints, such as consistent URL paths, standardized HTTP methods, and status codes, to ensure smooth communication.
+Layered System: REST APIs can be deployed on multiple layers, which helps with scalability and security.
+Various HTTP Methods Used in REST API
+In HTTP, there are five methods that are commonly used in a REST-based Architecture, i.e., POST, GET, PUT, PATCH, and DELETE. These correspond to create, read, update, and delete (or CRUD) operations, respectively. There are other methods that are less frequently used, like OPTIONS and HEAD.
+
+1. GET Method
+The HTTP GET method is used to read (or retrieve) a representation of a resource. In the safe path, GET returns a representation in XML or JSON and an HTTP response code of 200 (OK). In an error case, it most often returns a 404 (NOT FOUND) or 400 (BAD REQUEST).
+
+GET /users/123
+This request fetches data for the user with ID 123.
+
+2. POST Method
+The POST method is commonly used to create new resources. It is often used to create subordinate resources related to a parent resource. Upon successful creation, the server returns HTTP status 201 (Created) along with a Location header pointing to the newly created resource.
+
+POST /users
+{ 
+  "name": "Anjali", 
+  "email": "gfg@example.com"
+}
+This request creates a new user with the given data.
+
+ NOTE:  POST is neither safe nor idempotent. 
+
+3. PUT Method
+PUT is an HTTP method used to update or create a resource on the server. When using PUT, the entire resource is sent in the request body, and it replaces the current resource at the specified URL. If the resource doesn’t exist, it can create a new one.
+
+PUT /users/123
+{ 
+  "name": "Anjali", 
+  "email": "gfg@example.com"
+}
+This request updates the user with ID 123 or creates a new user if one doesn't exist.
+
+4. PATCH Method
+PATCH is an HTTP method used to partially update a resource on the server. Unlike PUT, PATCH only requires the fields that need to be updated to be sent in the request body. It modifies specific parts of the resource rather than replacing the entire resource.
+
+PATCH /users/123
+{ 
+  "email": "new.email@example.com" 
+}
+This request updates only the email of the user with ID 123, leaving the rest of the user data unchanged.
+
+Key Differences Between PUT & PATCH
+Both PATCH and PUT are used to update resources on the server, but they differ in how they handle the update process:
+
+PUT	PATCH
+Replaces the entire resource	Updates only specified fields
+Must send full data	Only sends changes
+Idempotent	Not always idempotent
+Example: Updating a user’s entire profile	Example: Changing just a user’s email
+5. DELETE Method
+ It is used to delete a resource identified by a URI. On successful deletion, return HTTP status 200 (OK) along with a response body.
+
+DELETE /users/123
+This request deletes the user with ID 123.
+
+Idempotence: An idempotent HTTP method is a HTTP method that can be called many times without different outcomes. It would not matter if the method is called only once, or ten times over. The result should be the same. Again, this only applies to the result, not the resource itself.
+
+Create a Simple REST API using Node.js and Express
+Now let's create a REST AP and perform the various HTTP operations.
+
+Step 1: Create the folder
+Create the NodeJs project by using the following command:
+
+mkdir node-app
+cd node-app
+Step 2: Install the package.json
+npm init -y
+Step 3: Install Express
+To begin building a REST API in Node.js, you need to install Express. Run the following command in your terminal:
+
+npm install express
+Step 4: Create the Server
+Here’s a basic example of creating a REST API in Node.js using Express
+
+
+// Import the Express module
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.use(express.json());
+
+// Define a route for GET requests
+app.get('/users', (req, res) => {
+    res.json({ message: 'Returning list of users' });
+});
+
+// Define a route for POST requests
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+    res.json({ message: 'User created', user: newUser });
+});
+
+// Define a route for PUT requests
+app.put('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    const updatedUser = req.body;
+    res.json({ message: `User with ID ${userId} updated`, updatedUser });
+});
+
+// Define a route for DELETE requests
+app.delete('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    res.json({ message: `User with ID ${userId} deleted` });
+});
+
+// Start the server
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
+
+
+Output: To test the API, open http://localhost:3000 in Postman or another API testing tool.
+
+In this example
+
+GET /users: This route fetches the list of users (or mock data in this case).
+POST /users: This route accepts JSON data from the client to create a new user.
+PUT /users/:id: This route updates the information of a user based on the user ID provided in the URL.
+DELETE /users/:id: This route deletes a user with the specified ID.
+Applications of REST APIs
+REST APIs are widely used across various industries to simplify communication between systems. Some common applications include:
+
+Social Media: Integrating third-party platforms like Facebook, Twitter, and Instagram for features like login, sharing, and posting.
+E-Commerce: Managing products, processing payments, handling orders, and customer management.
+Geolocation Services: GPS tracking, real-time location updates, and location-based services like finding nearby places.
+Weather Forecasting: Fetching weather data from external sources to provide real-time weather updates and forecasts.
+
+What is RestFul API?
+APIs play an important role in the communication between different software systems. Traditional methods of doing this were often complicated, slow, and hard to grow. RESTful APIs solve these problems by offering a simple, fast, and scalable way for systems to communicate using standard web protocols like HTTP.
+
+A RESTful API (Representational State Transfer) is a type of web service that follows the principles of REST. It allows communication between a client and a server over HTTP. RESTful APIs are widely used in web development to build scalable and efficient systems. They are designed around stateless operations, allowing clients and servers to interact.
+
+Understanding REST
+REST, or Representational State Transfer, is an architectural style for designing networked applications. It was introduced by Roy Fielding in his doctoral dissertation in 2000. RESTful APIs are based on constraints, which focus on stateless communication, resource-based design, and uniform interfaces.
+
+The core concept of REST is that the communication between the client and server occurs through standard HTTP methods, and all interactions are based on the concept of resources. Resources represent objects or data that can be accessed via a unique URL.
+
+Core Principles of REST
+RESTful APIs strictly follow the given below principles:
+
+Statelessness: Each request from a client to the server must contain all the information needed to understand and process the request. The server does not store any information about the client session between requests.
+Client-Server Architecture: The client and server are independent entities that communicate over a network. The client is responsible for the user interface and user experience, while the server handles data storage and processing.
+Uniform Interface: REST APIs provide a consistent interface for clients to interact with, making it easier for developers to work with different services. This uniformity is achieved by following a set of well-defined conventions for request and response formats.
+Cacheability: Responses from the server can be explicitly marked as cacheable or non-cacheable, improving performance by reducing the need for repeated server requests.
+Layered System: The architecture allows multiple layers between the client and server, such as load balancers or proxies, without affecting the overall system's functionality.
+Code on Demand: The server can provide executable code, like JavaScript, to the client to extend functionality.
+How do RESTful APIs Work?
+RESTful APIs work by sending requests over HTTP and receiving responses in a standard format, usually JSON or XML. The client sends an HTTP request to a specific endpoint (URL), and the server processes the request, returning a response.
+
+Here’s a general flow of how RESTful APIs work:
+
+Client sends a request to the server with an HTTP method (GET, POST, PUT, DELETE).
+Server processes the request and accesses the appropriate resource.
+Server responds with a status code and the requested data in a standard format like JSON or XML.
+Client receives the response, processes the data, and updates the user interface.
+RESTful API Authentication Methods
+There are several ways to authenticate requests in a RESTful API
+
+Basic Authentication: This method sends a username and password with each request, encoded in base64. It is simple but not secure unless used over HTTPS.
+API Keys: A unique key is provided to the client, and it must be included in the API request header to authenticate the user.
+OAuth: OAuth is an authorization protocol that allows a third-party service to access a user's data without sharing their password. It’s commonly used in applications requiring login through social media accounts.
+JWT (JSON Web Token): JWT is a URL-safe token format used for securely transmitting information between the client and the server. It is widely used for single sign-on and stateless authentication.
+Various HTTP Methods in RESTful API
+RESTful APIs use standard HTTP methods to interact with resources
+
+GET: Retrieve data from the server (e.g., get user details).
+POST: Send data to the server to create a new resource (e.g., add a new user).
+PUT: Update an existing resource with new data (e.g., update user information).
+DELETE: Remove a resource from the server (e.g., delete a user).
+PATCH: Apply partial updates to a resource (e.g., update only one field of user details).
+RESTful API Client Request
+When making a request to a RESTful API, the client typically needs to include the following elements
+
+URL: The endpoint to which the client is sending the request.
+HTTP Method: The action to be performed (GET, POST, PUT, DELETE, etc.).
+Headers: Information about the request, such as authentication credentials, content type, and user-agent.
+Body: Data sent with the request, especially in POST or PUT requests. This data is usually in JSON or XML format.
+Example of a GET request
+
+GET /users/123
+Host: api.example.com
+Authorization: Bearer <token>
+RESTful API Server Response
+
+After processing the request, the server returns a response that typically includes the following:
+
+Status Code: A numerical code that indicates the result of the request (e.g., 200 for success, 404 for not found, 500 for server error).
+Headers: Metadata about the response, such as content type, length, and caching instructions.
+Body: The data returned by the server, typically in JSON or XML format.
+Example of a server response:
+
+{
+    "id": 123,
+    "name": "gfg",
+    "email": "gfg@example.com"
+}
+Use Cases of RESTful API
+The use cases of the RESTful API in web development are mentioned below:
+
+Web Services: Connecting different web applications to share data or services, such as payment gateways or weather APIs.
+Mobile Applications: Enabling mobile apps to communicate with back-end servers and access resources like user data, media files, or settings.
+Microservices: RESTful APIs are used to communicate between small, independent services in a microservices architecture.
+IoT Devices: RESTful APIs allow devices in the Internet of Things (IoT) ecosystem to exchange data with cloud services.
+What are the benefits of RESTful APIs?
+RESTful APIs offer several benefits that make them an ideal choice for web and mobile development:
+
+Scalability: Due to their stateless nature, RESTful APIs can handle large numbers of clients and scale easily as demand grows.
+Simplicity: The use of HTTP methods and a consistent approach to accessing resources makes RESTful APIs simple to use and understand.
+Flexibility: RESTful APIs can work with various data formats, such as JSON and XML, making them flexible with a wide range of platforms.
+Performance: REST APIs use HTTP, which is a fast and efficient way to send data. This allows them to handle a lot of requests quickly with minimal delay.
+Security: RESTful APIs can use common web security methods like HTTPS, OAuth, and JWT to make sure that communication is safe and users are properly authenticated.
+REST API vs RESTful API
+Below is the difference between the Rest API and the RESTful API.
+
+Feature
+
+REST API
+
+RESTful API
+
+Definition
+
+A REST API do not strictly follows the REST principle. Follows some of the REST principles.
+
+A type of REST API that strictly follows all the REST principles.
+
+State
+
+Can be stateful or stateless.
+
+Always stateless (no client session is stored).
+
+Communication
+
+May use any protocol for communication.
+
+Specifically uses HTTP/HTTPS for communication.
+
+Application Size
+
+Suitable for both large and small applications.
+
+Best suited for large applications due to its scalability and standardization.
+
+Resources
+
+Resources may not be represented in a uniform way.
+
+Resources are represented using uniform URLs and are manipulated using HTTP methods (GET, POST, PUT, DELETE).
+
+Conclusion
+In this article, we explored the concept of RESTful APIs, which are a powerful and efficient way for applications to communicate over the web using HTTP. By following the principles of REST, such as stateless communication, resource-based design, and a uniform interface, RESTful APIs provide scalability, flexibility, and performance for modern web and mobile applications.
+
+What is REST API?
+A REST (REpresentational State Transfer) API is a web service that follows the principles of REST architecture to interact between clients and servers over HTTP. It uses standard HTTP methods (GET, POST, PUT, DELETE) to perform CRUD (Create, Read, Update, Delete) operations on resources, and data is typically transferred in JSON or XML format.
+
+Principles of REST API
+REST APIs are built on six fundamental principles that define their architecture and functionality:
+
+Statelessness: Each request from a client to the server must contain all the necessary information, and the server does not store session-related data.
+Client-Server Architecture: The client and server are separate entities, allowing for independent development and scalability.
+Uniform Interface: A consistent way of accessing resources, typically via standardized HTTP methods (GET, POST, PUT, DELETE).
+Cacheability: Responses from the server should indicate whether they can be cached to improve performance.
+Layered System: The architecture should support multiple layers (such as load balancers, authentication servers, and data storage) without affecting the client-server interaction.
+Code on Demand (Optional): The server can send executable code (like JavaScript) to the client to enhance functionality, though this is rarely used.
+HTTP Methods Used in API
+In RESTful APIs, HTTP methods define the actions to be performed on resources. Each HTTP method corresponds to a specific operation in the CRUD (Create, Read, Update, Delete) cycle. Here’s an explanation of the commonly used HTTP methods:
+
+GET Method
+The GET method is used to retrieve an existing resource from the server. The server responds with the resource's data, often in JSON or XML format. It is used to read the data.
+
+HTTP GET http://example.com/users
+HTTP GET http://example.com/users/123
+POST Method
+The POST method is used to create a new resource on the server. It sends data to the server as part of the request body, typically in JSON or XML format. It is used to create a new resource on the server.
+
+HTTP POST http://example.com/users
+HTTP POST http://example.com/users/123
+PUT Method
+The PUT method is used to update an existing resource on the server. It requires the client to send the updated data in the request body. It is used to update the data.
+
+HTTP PUT http://example.com/users/123
+HTTP PUT http://example.com/users/123/name/Anjali
+PATCH Method
+The PATCH method is used to apply partial modifications to a resource. Unlike PUT, which typically updates the entire resource, PATCH only sends the changes to be made, making it more efficient in certain scenarios. It is used to partially update the data on the server.
+
+HTTP PATCH http://example.com/users/123
+HTTP PATCH http://example.com/users/123/name/Anjali
+DELETE Method
+The DELETE method is used to delete a resource from the server. Once executed successfully, it usually returns a status code indicating the deletion has been completed, such as 200 OK or 204 No Content. It is used to delete the data.
+
+HTTP DELETE http://example.com/users/123
+HTTP DELETE http://example.com/users/123/name/Ravi
+How to Create a REST API in NodeJS?
+You can create a simple REST API in NodeJS using the built-in http module or the more popular Express.js framework, which simplifies routing and middleware handling.
+
+Step 1: Create the folder
+Create the NodeJs project by using the following command
+
+mkdir node-app
+cd node-app
+Step 2: Install the package.json
+npm init -y
+Step 3: Install Express
+To begin building a REST API in NodeJS, you need to install Express. Run the following command in your terminal:
+
+npm install express
+Step 4: Create the Server
+Here’s a basic example of creating a REST API in NodeJS using Express
+
+
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.use(express.json());
+
+app.get('/users', (req, res) => {
+    res.json({ message: 'Returning list of users' });
+});
+
+app.post('/users', (req, res) => {
+    const newUser = req.body;
+    res.json({ message: 'User created', user: newUser });
+});
+
+app.put('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    const updatedUser = req.body;
+    res.json({ message: `User with ID ${userId} updated`, updatedUser });
+});
+
+app.delete('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    res.json({ message: `User with ID ${userId} deleted` });
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
+Output:
+
+Run the server
+
+node app.js
+Open the http://localhost:3000 on the postman to check the API is working properly or not.
+
+In this example
+
+GET /users: This route fetches the list of users (or mock data in this case).
+POST /users: This route accepts JSON data from the client to create a new user.
+PUT /users/:id: This route updates the information of a user based on the user ID provided in the URL.
+DELETE /users/:id: This route deletes a user with the specified ID.
+Common HTTP Status Codes in REST APIs
+When working with REST APIs, you’ll often encounter the following HTTP status codes that indicate the result of the request:
+
+200 OK: The request was successful, and the server returned the requested data.
+201 Created: A new resource has been successfully created (usually returned for POST requests).
+400 Bad Request: The request is malformed or missing required data.
+401 Unauthorized: The request requires authentication, and the user is not authorized.
+404 Not Found: The requested resource was not found.
+500 Internal Server Error: The server encountered an unexpected condition.
+Best Practices for Building REST APIs in NodeJS
+Use HTTP Status Codes Properly: Always return the correct status code to indicate the result of the request.
+Keep Routes Consistent: Use consistent naming conventions and URL patterns to make your API intuitive and easy to use.
+Use Middleware for Error Handling: Add middleware functions to handle errors globally across all routes.
+Secure Your API: Use authentication mechanisms like JWT (JSON Web Tokens) to ensure that only authorized users can access certain endpoints.
+Validate Input: Always validate incoming data to prevent issues and ensure that the data adheres to the required structure.
+Use Caching: Consider caching responses for frequently requested resources to improve performance and reduce server load.
+
+What Makes an API RESTful?
+In web development, APIs help different software systems to interact with each other. They allow applications to request data or services from other programs, making it possible for developers to create complex, integrated systems. One common style for designing APIs is REST (Representational State Transfer), which is widely adopted for its simplicity and scalability.
+
+In this article, we will explore what makes an API RESTful by understanding the core principles of REST architecture and how these principles ensure scalability and efficiency.
+
+What is an API?
+An API (Application Programming Interface) is like a bridge that allows two different software programs to talk to each other. It’s a set of rules and instructions that tell one program how to request data or services from another program. API helps different apps or programs communicate and share data.
+
+For example, imagine you’re using a weather app on your phone. The app doesn’t have the weather information built into it. Instead, it uses an API to request weather data from a weather service. The service sends back the information (like temperature or forecast), and the app displays it for you.
+
+What makes an API RESTful?
+An API is considered RESTful when it follows the principles of REST (Representational State Transfer) architecture. These rules make the API scalable, easy to use, and efficient for handling web-based communication. Here are the key elements that make an API RESTful:
+
+1. Statelessness
+In REST, statelessness means that each request from a client to the server must contain all the information needed to process the request. The server does not store any session information about the client between requests. Every request is independent, and the server does not rely on any information from previous requests.
+
+Example: When a user logs in or performs an action, all the necessary information (like authentication tokens, session data, etc.) must be sent with each request. The server will not store any session information between requests.
+
+2. Client-Server Architecture
+The client-server model means that the client (such as a web browser or mobile app) and the server (which processes and stores data) are separate entities. They communicate over a network (such as the Internet) through standard protocols like HTTP.
+
+Example: In a RESTful system, the client could be a mobile app requesting data, and the server handles data storage, processing, and responding to requests. The client only focuses on presenting the data to the user.
+
+3. Uniform Interface
+A uniform interface means that the API follows a standard set of conventions for interacting with resources (data). This allows clients to interact with different services in a consistent way, making APIs easier to use and integrate.
+
+Key elements of a uniform interface include:
+
+Standard HTTP methods: Using HTTP verbs like GET, POST, PUT, DELETE to perform operations on resources (data).
+
+GET retrieves data.
+POST creates new data.
+PUT updates existing data.
+DELETE removes data.
+Consistent URLs: Each resource (such as a user, product, or order) is accessed using a unique, predictable URL.
+Example:
+
+GET /users: Retrieves a list of users.
+POST /users: Creates a new user.
+GET /users/{id}: Retrieves a specific user by ID.
+PUT /users/{id}: Updates a specific user.
+DELETE /users/{id}: Deletes a specific user.
+4. Cacheability
+In REST, cacheability refers to the idea that responses from the server can be explicitly marked as cacheable or non-cacheable. Caching helps improve the performance of an API by reducing the need for repeated requests for the same data, saving both time and resources.
+
+Example: If a request to GET /products returns data that doesn't change frequently, the server can tell the client to cache the response for a specific period, reducing the need to fetch the same data again.
+
+5. Layered System
+A RESTful system can be composed of multiple layers that sit between the client and server, such as load balancers, security proxies, or caching servers. Each layer only interacts with the layer directly above or below it, and the client cannot see the layers in between.
+
+Example: A client might interact with a gateway API that handles authentication and rate limiting before forwarding the request to a backend server that processes the data.
+
+6. Code on Demand
+Code on Demand is an optional constraint in REST. The server can provide executable code (such as JavaScript or WebAssembly) to the client, which can then be executed to extend the client’s functionality.
+
+Example: A server might send JavaScript code to the client to update the user interface or add new behavior to the application without requiring a full page refresh.
+
+Designing a RESTful API
+When designing a RESTful API, there are several best practices to follow:
+
+1. Use Meaningful Resource Names
+Resource names should be nouns, and they should be plural if they represent a collection of items. For example:
+
+/users for a collection of users.
+/users/{id} for a specific user.
+2. Consistent Use of HTTP Methods
+Ensure that HTTP methods are used consistently. For instance, use GET to retrieve data, POST to create new records, PUT or PATCH to update records, and DELETE to remove records.
+
+3. Keep URLs Simple and Intuitive
+URLs should be simple, meaningful, and easy to understand. Avoid using complex query parameters or redundant path segments.
+
+4. Provide Clear Error Responses
+Ensure that your API provides clear and meaningful error messages. A typical RESTful API will return a proper HTTP status code (e.g., 404 Not Found, 500 Internal Server Error) along with an error message in the response body.
+
+5. Versioning
+APIs may evolve over time, so it's important to version your API. This can be done by including the version in the URL, such as /v1/users or /api/v1/users.
+
+Use Cases of RESTful API
+RESTful APIs are widely used in various applications due to their simplicity, scalability, and flexibility. Below are some common use cases for RESTful APIs:
+
+Social Media Applications: A mobile app or web application can use a RESTful API to fetch posts, likes, comments, and user profiles. The mobile app interacts with the backend server through RESTful APIs to send and receive data in real-time.
+E-Commerce Platforms: In an e-commerce application, RESTful APIs are used to manage customer orders, payment processing, and inventory. The API handles data from the front-end (the customer-facing interface) and interacts with back-end services, such as databases and payment gateways.
+Banking and Financial Services: In the banking industry, RESTful APIs are used for operations like transaction management, account querying, and customer service. They allow for secure, reliable communication between clients (such as mobile banking apps) and servers, while maintaining compliance with regulatory standards.
+IoT (Internet of Things) Applications: RESTful APIs are ideal for managing communication between devices in IoT systems. They allow devices like sensors, smart home appliances, and wearables to send data to a server, and also enable interaction with these devices remotely.
+Conclusion
+A RESTful API is not just about using HTTP methods; it’s about applying the fundamental REST principles to create APIs that are intuitive, flexible, and scalable. By sticking to these principles, developers can build APIs that are both easy to use and easy to evolve over time.
