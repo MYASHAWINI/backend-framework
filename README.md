@@ -312,18 +312,9 @@ REST uses familiar HTTP methods to work with resources. GET is for getting data.
 
 Clients send requests to REST API endpoints. These requests come with HTTP headers. The headers provide key details such as authorization tokens, the type of content, and acceptable formats. Parameters help filter results or connect different pieces of data.
 
-A typical REST endpoint would look like:
-
-GET https://api.example.com/users/1234
-
 The user with ID 1234 is the key resource here. The base URL reveals the location of the api server. The users path indicates that this is a user resource.
 
 Common patterns for REST endpoint URLs:
-
-/users - Handle accounts for users
-/posts - See blog posts
-/devices/{deviceId} - Control single IoT devices
-/reports?type=sales - Sort the report collection
 Endpoints use URL paths and queries. This shows how to get to data easily.
 
 Servers send HTTP response codes to show the results. They also add response headers to explain the content. The message body contains details about resources or data.
@@ -340,9 +331,6 @@ REST API analogy for the non-technical
 Think of a REST API like a menu at your favorite restaurant. Each dish represents a resource, like an image or a document. When you choose from the menu, you use HTTP methods to place your order. The kitchen, which acts as the server, prepares your dish based on what you asked for.
 
 Clients can easily order, update, or delete items from the menu. They can also manage resources using HTTP methods such as GET, POST, PUT, and DELETE. The great thing about this system is that it is organized. You can access it with simple actions. This makes it easy for both people and machines to use!
-
-REST vs SOAP
-SOAP and REST build web services in different ways. SOAP is a protocol with strict rules for XML messaging. It describes how services, transactions, and security should work. You use structured XML to make requests and get responses for operations. SOAP services are explained clearly with WSDL documents. These documents give detailed data about each action. This helps make robust tools, but it can also feel complicated.
 
 REST is a way to design systems. It follows certain principles, like having a uniform interface and interactions that do not depend on each other. With REST, people can work with resources using URIs. They can also move resource data, like JSON and XML, between clients and servers. Instead of showing different operations, REST lets you access named resources, much like you would open files in a folder. By focusing on architectural constraints for better scalability, REST wants to make connections simpler and lighter.
 
@@ -401,16 +389,6 @@ Parameterizing requests helps to narrow down results according to what users ent
 
 Statelessness in RESTful architecture reduces issues that come with sessions. It also makes it easier to expand the system.
 
-What are RESTful API authentication methods?
-There are many common ways to use authentication and authorization in RESTful APIs.
-
-API keys - You send an API key in the request header. This helps the server know who is making the request. It is simple to use, but it is not very safe.
-basic auth - You can put your username and password in an Authorization header. The server decodes and checks this information. Since it is sent without protection, the security is low.
-OAuth 2.0 - This is an open standard that uses tokens to show who the user is and what they can do. It allows users to access the system safely.
-OpenID Connect is a way to manage identity. It works with OAuth 2.0. You can log in with accounts from different providers, such as Google or Facebook. This helps make logging in simpler and more secure.
-
-Certificate-based systems, such as mutual TLS authentication, make use of digital certificates. These certificates help confirm the identity of both the client and server machines.
-
 The role of middleware in REST API integration
 A main part of understanding REST API security is knowing how Middleware plays a role. Middleware is crucial for making REST API interactions safe and dependable. It acts like a bridge between the client application and the server. It helps with several jobs, including authentication, logging, changing requests and responses, and managing errors.
 
@@ -428,21 +406,3 @@ A layered system has load balancers in its design.
 It has parts like firewalls and load balancers.
 This setup does not change how clients speak to servers.
 It helps to make things bigger and better.
-How to build and implement RESTful APIs
-A standard way to create a new RESTful API service includes:
-
-Find out what the API needs to show. It should be based on how the application will be used. Resources are real things like accounts and product catalogs.
-Give each resource a unique ID. You can do this by making URLs like /users or /accounts. Resources can also have a structure, like /customers/1234/orders.
-Use common HTTP methods to work with resources. For example, use GET to get data, POST to create data, and DELETE to remove resources.
-Choose a data format for sharing information. You can use JSON or XML. JSON is the most popular choice.
-Create a design for how api requests and responses should look, often for JSON data. You can use schemas, like OpenAPI Specification, to explain them clearly.
-Build resource route handlers using a programming language like Node.js or Java. These should handle tasks like getting data from a database and sending back nicely formatted responses.
-Make sure to add authentication to the API for better security.
-Set limits on how often users can access the API.
-Use caching to make responses quicker and lessen the load on the server.
-Offer clear documentation so users can easily learn how to use the API.
-Check the API interface thoroughly before it launches.
-Collect user feedback to make improvements later.
-Summary
-RESTful web APIs offer a simple way to build web service interfaces that can easily grow. They focus on main resources and use common HTTP methods. This approach helps in creating connected apps for both mobile devices and the web. A good RESTful design is important for today’s APIs because it comes with powerful tools and can handle development. Plus, REST's flexibility allows APIs to stay useful as needs change over time.
-
